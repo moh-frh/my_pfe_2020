@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>SofiTreon</title>
+
+    {% include "to_include/style.html" %}
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+<div class="wrapper">
+
+{% include "to_include/navbar.html" %}
+{% include "to_include/aside.html" %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{ nom_periph }}</h1>
+
+               <div id="refresh">
+                    <input value="ok" type="button" id="click" />
+                </div>
+              
+
+          </div>
+
+{#                <p> {{ desc_pereph }} </p>#}
+
+
+{#    {% for i in "1234567" %}#}
+
+                    <div id="bw"> {{ bw }} </div>
+
+{#    {% endfor %}#}
+
+
+
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">{{ nom_page }}</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- AREA CHART -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">CPU</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                {% include "monitor_pages/cpu.html" %}
+                <div id="chart_cpu"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- DONUT CHART -->
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Disque</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                {% include "monitor_pages/disque.html" %}
+                <div id="chart_disque"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- /.card -->
+
+          </div>
+          <!-- /.col (LEFT) -->
+          <div class="col-md-6">
+            <!-- LINE CHART -->
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">RAM</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  {% include "monitor_pages/ram.html" %}
+                <div id="chart_ram"></div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- BAR CHART -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Bandwith</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                    {% include "monitor_pages/bandwith.html" %}
+                <div id="chart_bandwith"></div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+            <!-- /.card -->
+
+          </div>
+          <!-- /.col (RIGHT) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+</div>
+
+{#----------- 3iyana/ word with reloading every second ----------------------#}
+{#<script>#}
+{#        $(document).ready(function () {#}
+{#            setInterval(function () {#}
+{#                $('#bandwith_div').text({{ bw }});#}
+                {#location.reload();#}
+{#                alert({{ bw }})#}
+{#                {% url 'test_snmp' %}#}
+{#            },5000);#}
+{#        });#}
+{#</script>#}
+
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+
+var timeout = setInterval(reloadChat, 5000);
+function reloadChat () {
+
+     $('#bw').text({{bw}});
+     $('#bw').reload('{% url 'test_snmp' %}');
+     alert({{ bw }})
+     $('#bw').empty();
+     {#location.reload();#}
+}
+</script>
+
+{# <script>#}
+{#    $('#click').click(function(){#}
+{#    var div=$('#refresh').html();#}
+{#    reload(div);#}
+{#    $.ajax({#}
+{#        url: '/monitor',#}
+{#        type: 'POST',#}
+{#        dataType: 'json',#}
+{#        data: {param1: 'value1'},#}
+{#    })#}
+{#    .done(function(data) {#}
+{#if(data.success=='ok'){#}
+{#        $('#refresh').html(div);#}
+{#}else{#}
+{#// show errors.#}
+{#}#}
+{#    })#}
+{#    .fail(function() {#}
+{#        console.log("error");#}
+{#    })#}
+{#    .always(function() {#}
+{#        console.log("complete");#}
+{#    });#}
+{#    });#}
+{##}
+{#</script>#}
+
+</body>
+</html>
