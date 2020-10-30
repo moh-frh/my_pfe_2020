@@ -1,101 +1,104 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Log in</title>
+  <title>AdminLTE 3 | Registration Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 {% include "to_include/style.html" %}
+
 </head>
 
-{#{% load crispy_forms_tags %}#}
-{% block content %}
+<body>
+<div class="register-box" >
 
+  <div class="card" style="margin-right: -200%; margin-left: 120%; margin-top: 50%;">
 
-<body class="hold-transition login-page">
-<div class="login-box">
-
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Sofi</b>Treon</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg"> vous avez deja un compte</p>
 
       <form action="" method="POST">
-           {% csrf_token %}
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="username" name="username">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="password" name="password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
+          {% csrf_token %}
+     <div class="input-group mb-3">
+       <input type="text" class="form-control" placeholder="username" name="username">
+       <div class="input-group-append">
+         <div class="input-group-text">
+           <span class="fas fa-envelope"></span>
+         </div>
+       </div>
+     </div>
 
-      <div class="social-auth-links text-center mb-3">
+     <div class="input-group mb-3">
+       <input type="password" class="form-control" placeholder="password" name="password">
+       <div class="input-group-append">
+         <div class="input-group-text">
+           <span class="fas fa-lock"></span>
+         </div>
+       </div>
+     </div>
+     <div class="row">
+       <div class="col-8">
+         <div class="icheck-primary">
+           <input type="checkbox" id="remember">
+           <label for="remember">
+             souvenir de moi
+           </label>
+         </div>
+       </div>
+
+
+       <!-- /.col -->
+       <div class="col-4">
+         <button type="submit" class="btn btn-primary btn-block">Login</button>
+       </div>
+       <!-- /.col -->
+     </div>
+   </form>
+
+      <div class="social-auth-links text-center">
         <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div>
-      <!-- /.social-auth-links -->
 
-      <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p>
-      <p class="mb-0">
-        <a href="{% url 'register' %}" class="text-center">Register</a>
-      </p>
+        <a href="{% url 'register' %}" class="btn btn-block btn-secondary">
+          creer un nouveau compte
+        </a>
+
+        {% for msg in messages %}
+            <a href="#" class="btn btn-block btn-danger">
+                <i class="fas fa-exclamation-triangle"></i>
+                          {{ msg }}
+                <i class="fas fa-exclamation-triangle"></i>
+            </a>
+        {% endfor %}
+
+      </div>
+
     </div>
-    <!-- /.login-card-body -->
-  </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+
 </div>
 
 
 
 
+<!-- /form scripts -->
+<script>
+		//Query All input fields
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[3].placeholder='Username..';
+		form_fields[4].placeholder='password';
+		form_fields[5].placeholder='confirmer password...';
+		{#form_fields[4].placeholder='Re-enter Password...';#}
 
-            {% for message in messages %}
-                <div class="alert alert-success" role="alert">
-                {{ message }}
-                </div>
-            {% endfor %}
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control'
+		}
+</script>
 
 
-
-<!-- /.login-box -->
-
-<!-- jQuery -->
-
-{% endblock content %}
 
 </body>
 </html>

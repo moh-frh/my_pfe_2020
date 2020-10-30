@@ -1,0 +1,16 @@
+{#{% extends 'report.html' %}#}
+
+{% load static %}
+
+{% block content %}
+
+    <p> are u sure to delete "{{ report_to_delete }}" ??</p>
+
+    <form method="post" action="{% url 'deleteReport' report_to_delete.id %}">
+    {% csrf_token %}
+    <a href="{% url 'createReport' %}" >annuler</a>
+    <input type="submit" name="Confirm">
+    </form>
+
+
+{% endblock %}

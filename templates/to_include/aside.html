@@ -2,7 +2,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{% url 'dashboard' %}" class="brand-link">
       <img src="{% static "images/soficlef_logo.png" %}" alt="soficlef_logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">SofiTreon</span>
@@ -13,15 +13,21 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-{#            <a href="{% url 'profile' %}">#}
-            <a href="#">
-                <img class="img-circle elevation-2" src="{% static "avatars/simple_user.png" %}" >
+            <a href="{% url 'dashboard' %}">
+                {% if request.user.username == "root" %}
+                    <img
+                       src="{% static 'images/admin.png' %}"
+                       alt="User profile picture">
+                    {% else %}
+                        <img
+                       src="{% static 'images/simple_user.png' %}"
+                       alt="User profile picture">
+                {% endif %}
             </a>
-
         </div>
         <div class="info">
             {% csrf_token %}
-          <a href="#" class="d-block">{{ request.user }}</a>
+          <a href="#" class="d-block">Bienvenue, {{ request.user }}</a>
         </div>
       </div>
 
@@ -38,8 +44,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{% url 'pre_monitor' %}" class="nav-link">
+          <li class="nav-item" style="margin-left: 10%">
+            <a href="#" class="nav-link disabled">
               <i class="nav-icon fas fa-desktop"></i>
               <p>
                 pre - monitoring
@@ -47,8 +53,8 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{% url 'monitor' %}" class="nav-link">
+          <li class="nav-item" style="margin-left: 10%">
+            <a href="{% url 'monitor' %}" class="nav-link disabled">
               <i class="nav-icon fas fa-desktop"></i>
               <p>
                 monitoring
@@ -66,7 +72,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{% url 'report' %}" class="nav-link">
+            <a href="{% url 'createReport' %}" class="nav-link">
               <i class="nav-icon fas fa-clipboard"></i>
               <p>
                 report
@@ -75,23 +81,11 @@
           </li>
 
           <li class="nav-item">
-            <a href="{% url 'login' %}" class="nav-link">
-              <i class="nav-icon fas fa-clipboard"></i>
-              <p>
-                login
-              </p>
+            <a class="nav-link"  href="/admin/login/">
+                <i class="fas fa-user-shield"></i>
+                mode admin
             </a>
           </li>
-
-          <li class="nav-item">
-            <a href="{% url 'register' %}" class="nav-link">
-              <i class="nav-icon fas fa-clipboard"></i>
-              <p>
-                register
-              </p>
-            </a>
-          </li>
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

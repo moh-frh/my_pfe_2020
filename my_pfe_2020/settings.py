@@ -25,6 +25,21 @@ SECRET_KEY = 'zpvwndqxpfbax9l8y&xe)+v_qxcw*io0o)%xf=dgycs9$3qpry'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# EMAIL_HOST = 'smtp.zoho.com'
+# EMAIL_HOST_USER = 'ib5064939@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Zoho12345'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "ib5064939@gmail.com"
+EMAIL_HOST_PASSWORD = "azertyx15"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
 ALLOWED_HOSTS = []
 
 
@@ -38,7 +53,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'pages',
+    'reports_side',
+    'authentication',
+    'monitor_side',
+    'django_extensions',
+    'log_viewer',
+    'configuration_side',
 ]
 
 MIDDLEWARE = [
@@ -73,23 +95,33 @@ TEMPLATES = [
 WSGI_APPLICATION = 'my_pfe_2020.wsgi.application'
 ASGI_APPLICATION = 'my_pfe_2020.routing.application'
 
-
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     },
 }
 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# my_pfe_DB
+
+# my_pfe_DB sqlLite
+# phpmyadmin my_pfe_db
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'my_pfe_db',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
     }
 }
 
@@ -135,3 +167,55 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
+
+LOGGING ={
+    'version':1,
+    'loggers':{
+        'django':{
+            'handlers': ['file1', 'file2', 'file3', 'file4'],
+            'level':'DEBUG'
+        }
+    },
+    'handlers':{
+
+        'file1':
+            {
+            'level':'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename':'./logs/debug.log',
+            'maxBytes': 1024 * 1024 * 2,  # 10 MB
+            # 'backupCount' : 1,
+            'formatter': 'simpleRe',
+            },
+        'file2':
+            {
+            'level':'INFO',
+            'class': 'logging.FileHandler',
+            'filename':'./logs/info.log',
+            'formatter': 'simpleRe',
+            },
+        'file3':
+            {
+            'level':'ERROR',
+            'class': 'logging.FileHandler',
+            'filename':'./logs/error.log',
+            'formatter': 'simpleRe',
+            },
+        'file4':
+            {
+            'level':'WARNING',
+            'class': 'logging.FileHandler',
+            'filename':'./logs/warning.log',
+            'formatter': 'simpleRe',
+            },
+
+
+    },
+    'formatters':{
+        'simpleRe': {
+            'format': '{levelname} ( {asctime} ) : {message} [ {module} {process:d} {thread:d} ] ',
+            'style': '{',
+        }
+}
+}
+

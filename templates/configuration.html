@@ -18,8 +18,7 @@
 {% include "to_include/navbar.html" %}
 {% include "to_include/aside.html" %}
 
-
-  <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -32,115 +31,20 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
+      <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3">
 
-            <!-- Profile Image -->
-            <div class="card card-primary card-outline">
-              <div class="card-body box-profile">
-                <div class="text-center">
-                    {% if request.user.username == "root" %}
-                    <img
-                       src="{% static 'images/admin.png' %}"
-                       alt="User profile picture">
-                    {% else %}
-                        <img
-                       src="{% static 'images/simple_user.png' %}"
-                       alt="User profile picture">
-                    {% endif %}
-                </div>
-
-                <h3 class="profile-username text-center"> {{ request.user.username }} </h3>
-
-                <p class="text-muted text-center">Soficlef Engineer</p>
-
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>utilisateur</b> <a class="float-right">{{ request.user.username }}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>email</b> <a class="float-right">{{ request.user.username }}@gmail.com</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>date d'ajout</b> <a class="float-right">{{ request.user.date_joined }}</a>
-                  </li>
-                </ul>
-
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- About Me Box -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">A propos de soficlef</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <strong><i class="fas fa-book mr-1"></i> prensentation</strong>
-
-                <p class="text-muted">
-                  entreprise à caractère industriel et commercial
-                </p>
-
-                <hr>
-
-                <strong><i class="fas fa-map-marker-alt mr-1"></i> sieges</strong>
-
-                  <ul>
-                      <li class="text-muted">si-mustapha</li>
-                      <li class="text-muted">Chéraga</li>
-                  </ul>
-
-                <hr>
-
-                <strong><i class="fas fa-pencil-alt mr-1"></i> operations</strong>
-
-                <ul>
-                      <li class="text-muted">Production et Fabrication</li>
-                      <li class="text-muted">Montage des serrures</li>
-                      <li class="text-muted">Commercialisation</li>
-
-                </ul>
-
-                <hr>
-
-                <strong><i class="far fa-file-alt mr-1"></i> contact</strong>
-
-                <p class="text-muted">soficlef35@gmail.com </p>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
           <!-- /.col -->
-          <div class="col-md-9">
+          <div class="col-md-12">
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">information sur le reseau</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Modifier mes informations</a></li>
-                </ul>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content">
-                  <div class="active tab-pane" id="activity">
-                    <!-- Post -->
-                    <div class="post">
-
-                      <div class="row">
-                          <div class="col-md-12">
-                            <div class="card">
-                              <div class="card-header">
-                                <h5 class="card-title"> les appareils connectes </h5>
-
-                                <div class="card-tools">
+                  <li>
+                      <div class="card-tools float-right">
                                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                   </button>
@@ -156,10 +60,84 @@
                                       <a href="#" class="dropdown-item">Separated link</a>
                                     </div>
                                   </div>
-                                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                  </button>
-                                </div>
+
+                      </div>
+                  </li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+
+                      <div class="row">
+                      <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="col-sm-3"
+                       src="{% static 'images/ssh.png' %}"
+                       alt="User profile picture">
+
+                </div>
+
+
+                <form method="post" action="{% url 'commands_line' %}">
+                    {% csrf_token %}
+                    <ul class="list-group list-group-unbordered">
+                      <li class="">
+                        <div class="form-group">
+                            <input name="ip" type="text"  class="form-control" placeholder="adresse IP">
+                        </div>
+                      </li>
+
+                        <div class="form-group">
+                        <select name="device_type" class="form-control" id="exampleFormControlSelect1">
+                            <option>cisco_ios</option>
+                            <option>huawei_ios</option>
+                            <option>juniper_ios</option>
+                        </select>
+                      </div>
+
+                      <li class="">
+                        <div class="form-group">
+                            <input name="username" type="text"  class="form-control" placeholder="ssh username">
+                        </div>
+                      </li>
+
+                      <li class="">
+                        <div class="form-group">
+                            <input name="password" type="text"  class="form-control" placeholder="ssh password">
+                        </div>
+                      </li>
+
+                      <li class="">
+                        <div class="form-group">
+                            <input name="enable_secret_password" type="text"  class="form-control" placeholder="enable password">
+                        </div>
+                      </li>
+
+                        <div class="timeline-footer">
+                        <button type="submit" class="btn btn-block bg-gradient-success btn-lg "> valider les informations </button>
+                      </div>
+                    </ul>
+                </form>
+
+{#                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+          </div>
+                          <div class="col-md-8">
+                            <div class="card">
+                              <div class="card-header">
+                                <h5 class="card-title"> les appareils connectes </h5>
+
+
                               </div>
                               <!-- /.card-header -->
                               <div class="card-body">
@@ -247,47 +225,12 @@
                               </div>
                               <!-- /.card-footer -->
                             </div>
+{#                          <div id="commands_result">fds</div>#}
                             <!-- /.card -->
                           </div>
-          <!-- /.col -->
                         </div>
-
-                    </div>
-
-                    <div class="post" >
-                      <img src="{% static 'images/topology_soficlef.PNG'%}">
                     </div>
                     <!-- /.post -->
-                  </div>
-
-                  <!-- /.tab-pane -->
-
-                  <div class="tab-pane" id="settings">
-                      {% csrf_token %}
-                    <form class="form-horizontal" method="post" >
-                        {% csrf_token %}
-
-
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">utilisateur</label>
-                        <div class="col-sm-10">
-                          {{ user_update_form.username }}
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">email</label>
-                        <div class="col-sm-10">
-                          {{ user_update_form.email }}
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-block bg-gradient-success btn-lg ">modifier mes informations</button>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                   <!-- /.tab-pane -->
                 </div>
@@ -302,74 +245,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-           <!-- /.5 dernier visiteur -->
-              <div class="card col-lg-12 ">
-                <div class="table-responsive">
-                  <table class="table m-0">
-                    <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th> <i class="fas fa-user-friends"></i> utilisateur</th>
-                      <th> <i class="fas fa-sign-in-alt"></i> le dernier login</th>
-                      <th><i class="fas fa-envelope-open-text"></i>  email </th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                {% for last_l in last_3_logged %}
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">{{ last_l.id }}</a></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">{{ last_l.last_login }}</div>
-                        </td>
-                        <td><span class="badge badge-success">{{ last_l.username }}</span></td>
-                        <td><span class="badge badge-info">{{ last_l.email }}</span></td>
-
-
-                    </tr>
-                {% endfor %}
-
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.table-responsive -->
-              </div>
-
-
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
 
 </div>
-
-<!-- /form scripts -->
-<script>
-		//Query All input fields
-		var form_fields = document.getElementsByTagName('input')
-		form_fields[4].value="{{ user.username }}";
-		form_fields[5].value="{{ user.email }}";
-
-
-
-
-		for (var field in form_fields){
-			form_fields[field].className += ' form-control'
-		}
-</script>
-
 </body>
-</html>

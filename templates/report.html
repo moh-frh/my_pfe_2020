@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Editors</title>
-  <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>SofiTreon</title>
     {% include "to_include/style.html" %}
-  <!-- summernote -->
-{#  <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.css">#}
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
 </head>
+
 <body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
 <div class="wrapper">
-  <!-- Navbar -->
   {% include "to_include/navbar.html" %}
-  <!-- /.navbar -->
+
 
   <!-- Main Sidebar Container -->
   {% include "to_include/aside.html" %}
-
+  <!-- aside -->
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -31,7 +28,6 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{ nom_page }}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -45,39 +41,261 @@
 
     <!-- Main content -->
     <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title info-box-text text-center text-muted">ajouter / modifier / supprimer </h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+              <div class="row">
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">tous les rapports</span>
+                      <span class="info-box-number text-center text-muted mb-0">
+                          {{ all_reports_count }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-sm-4">
+                    <div class="info-box bg-light">
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">rapport emergency</span>
+                            <span class="info-box-number text-center text-muted mb-0">
+                            {{ emergency_reports_count }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4">
+                    <div class="info-box bg-light">
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">rapport error</span>
+                            <span class="info-box-number text-center text-muted mb-0">
+                                {{ error_reports_count }}
+                            <span>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <h4>tous mes rapports</h4>
+
+                    <div class="">
+
+      <div class="card">
+
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          ID
+                      </th>
+                      <th style="width: 20%">
+                          description
+                      </th>
+                      <th style="width: 1%">
+                          type
+                      </th>
+
+                      <th style="width: 8%" class="text-center">
+                          date ajoute
+                      </th>
+
+                      <th style="width: 20%">
+
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+
+              {% for report in all_reports %}
+
+                  <tr>
+                      <td>
+                          {{ report.id }}
+                      </td>
+                      <td>
+                          {{report.text}}
+                      </td>
+
+                      <td class="project-state">
+                          {% if report.type == "Informational" or report.type == "Debug" %}
+                          <span class="badge badge-success">{{ report.type }}</span>
+                              {% elif report.type == "Warning" or report.type == "Critical" %}
+                                <span class="badge badge-warning">{{ report.type }}</span>
+                              {% else %}
+                                <span class="badge badge-danger">{{ report.type }}</span>
+
+
+                          {% endif %}
+                      </td>
+
+                      <td class="project-state">
+{#                          {% if report == "danger" %}#}
+                          <span class="badge ">{{ report.timestamp }}</span>
+{#                          {% endif %}#}
+                      </td>
+
+                      <td class="project-actions text-right">
+
+                          <a class="btn btn-info btn-sm" href="{% url 'updateReport' report.id %}">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Editer
+                          </a>
+                          <a class="btn btn-danger btn-sm" href="{% url 'deleteReport' report.id %}">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </a>
+                      </td>
+                  </tr>
+
+              {% endfor %}
+
+
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    <!-- /.content -->
+  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+
+
+                    <!-- Main content -->
+    <section class="content">
       <div class="row">
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header">
-              <h3 class="card-title">
-                <small>creer votre rapport ici :</small>
-              </h3>
-              <!-- tools box -->
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip"
-                        title="Collapse">
-                  <i class="fas fa-minus"></i></button>
-                <button type="button" class="btn btn-tool btn-sm" data-card-widget="remove" data-toggle="tooltip"
-                        title="Remove">
-                  <i class="fas fa-times"></i></button>
-              </div>
+                  <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{ ajouter_modifier }} un rapport</h3>
               <!-- /. tools -->
             </div>
             <!-- /.card-header -->
-            <div class="card-body pad">
-              <div class="mb-3">
-                <textarea class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-              </div>
 
-                <button class="btn btn-block bg-gradient-success btn-lg "> envoyer </button>
+            <form method="post" action="">
+                {% csrf_token %}
+
+            <div class="card-body pad">
+{#--- {{ form.user }} ---#}
+                <div class="input-group mb-6">
+                    {{ form.type }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <a href="#" data-toggle="modal" data-target="#exampleModalLong"> <i  class="fas fa-info-circle"></i> </a>
+
+                    </div>
+                </div>
+                </div>
+
+<br>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">les levels des rapports </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Severity Number</th>
+      <th scope="col">Severity Name</th>
+      <th scope="col">System Response</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <th scope="row">0</th>
+      <td>Debug</td>
+      <td>Debug messages</td>
+    </tr>
+
+    <tr>
+      <th scope="row">1</th>
+      <td>Informational</td>
+      <td>Informational messages</td>
+    </tr>
+
+    <tr>
+      <th scope="row">2</th>
+      <td>Critical</td>
+      <td>Critical conditions exist</td>
+    </tr>
+
+    <tr>
+      <th scope="row">3</th>
+      <td>Warning</td>
+      <td>Warning conditions exist</td>
+    </tr>
+
+    <tr>
+      <th scope="row">4</th>
+      <td>Error</td>
+      <td>Error conditions exist</td>
+    </tr>
+
+  </tbody>
+</table>
+      </div>
+
+    </div>
+  </div>
+</div>
+                <div class="form-group">
+                    {{ form.text }}
+                </div>
+
+                <button type="submit" class="btn btn-block bg-gradient-success btn-lg "> sauvgarder </button>
 
             </div>
+            </form>
+
           </div>
         </div>
         <!-- /.col-->
       </div>
       <!-- ./row -->
+
+    </section>
+
+
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
 
     </section>
     <!-- /.content -->
@@ -94,18 +312,29 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-<!-- Summernote -->
-{#<script src="../../plugins/summernote/summernote-bs4.min.js"></script>#}
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<!-- /form scripts -->
 <script>
-  $(function () {
-    // Summernote
-    $('.textarea').summernote()
-  })
+		//Query All input fields
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username..';
+		form_fields[2].placeholder='password';
+		form_fields[3].placeholder='description de rapport';
+
+		{#form_fields[4].placeholder='Re-enter Password...';#}
+
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control'
+		}
 </script>
+
 </body>
 </html>

@@ -22,15 +22,15 @@
         $(document).ready(function () {
             setInterval(function () {
                 var dt = new Date();
-                $('#now_time').text(dt.getFullYear()+"-"+dt.getMonth()+"-"+dt.getDay()+" / "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds());
-            },2000);
+                $('#now_time').text(dt.getHours()+":"+dt.getUTCMinutes()+":"+dt.getUTCSeconds());
+            },1000);
             var dt = new Date();
         });
     </script>
 
 </head>
 
-<body class="hold-transition sidebar-mini">{{ ping_result }}
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
 {% include "to_include/navbar.html" %}
@@ -61,7 +61,7 @@
     <section class="content">
         <form method="POST" action="{% url 'test_snmp' %}" >
             {% csrf_token %}
-      <div class="container-fluid">
+        <div class="container-fluid">
 
         <!-- Timelime example  -->
         <div class="row">
@@ -85,7 +85,7 @@
                 <div class="timeline-body">
 
                   <div class="input-group mb-3">
-                    <input name="adr_ip" type="text" class="form-control" placeholder="entrer l'adresse ip (ex : 192.168.1.1)" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input value="{{ net }}" name="adr_ip" type="text" class="form-control" placeholder="entrer l'adresse ip (ex : 192.168.1.1)" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" onclick="tester_ping()">tester le ping</button>
                     </div>
@@ -104,14 +104,15 @@
                   <h3 class="timeline-header"><a >informations sur le SNMP :</a> </h3>
 
                   <div class="timeline-body">
+
                    <div class="form-group">
-                    <label for="exampleFormControlSelect1">version de SNMP :</label>
-                    <select name="version_snmp" class="form-control" id="exampleFormControlSelect1">
-                        <option>SNMP-2C</option>
-                        <option>SNMP-1</option>
-                        <option>SNMP-3</option>
-                    </select>
-                  </div>
+                        <label for="exampleFormControlSelect1">version de SNMP :</label>
+                        <select name="version_snmp" class="form-control" id="exampleFormControlSelect1">
+                            <option>SNMP-2C</option>
+                            <option>SNMP-1</option>
+                            <option>SNMP-3</option>
+                        </select>
+                   </div>
 
 
                   <div class="form-group">
@@ -137,19 +138,13 @@
           <!-- /.col -->
         </div>
       </div>
-      <!-- /.timeline -->
 
         </form>
     </section>
-    <!-- /.content -->
 
-
-    <!-- /.content -->
   </div>
 
 </div>
-
-
 
 </body>
 </html>
