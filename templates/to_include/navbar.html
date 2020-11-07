@@ -11,20 +11,21 @@
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link"><i class="nav-icon fas fa-desktop"></i></a>
-      </li>
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'monitor' %}" class="nav-link"><i class="nav-icon fas fa-desktop"></i></a>
-      </li>
-
-      <li class="nav-item d-none d-sm-inline-block">
         <a href="{% url 'configuration' %}" class="nav-link"><i class="nav-icon fas fa-terminal"></i></a>
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{% url 'createReport' %}" class="nav-link"><i class="nav-icon fas fa-clipboard"></i></a>
       </li>
+
+      {% if request.user.is_superuser == 1 %}
+          <li class="nav-item">
+            <a class="nav-link"  href="/admin/log_viewer/">
+                <i class="fas fa-file-medical-alt"></i>
+
+            </a>
+          </li>
+{% endif %}
 
     </ul>
 
@@ -128,7 +129,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+        <a class="nav-link" data-widget="" data-slide="true" href="{% url 'dashboard' %}">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
@@ -146,6 +147,8 @@
           <i class="fas fa-sign-out-alt"></i>
         </a>
       </li>
+
+
 
     </ul>
   </nav>

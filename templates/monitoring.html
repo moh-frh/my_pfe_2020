@@ -130,17 +130,21 @@
         </div>
         <!-- /.row -->
 
-        <div class="row">
+{#        <div class="row">#}
+{#          <div class="col-md-12">#}
+
+{#          <!-- /.col -->#}
+{#        </div>#}
+{#        </div>#}
+
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">monitoring</h5>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <div class="btn-group">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">monitoring</a>
+                  </li>
+                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">charts</a></li>
+                  <li class="nav-item">
                     <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                       <i class="fas fa-wrench"></i>
                     </button>
@@ -149,11 +153,29 @@
                           <i class="fas fa-exclamation-triangle text-danger"></i>
                           ajouter un rapport</a>
                     </div>
-                  </div>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
+                  </li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+
+                      <div class="row">
+                          <div class="col-md-12">
+
+
+                              <!-- /.card-header -->
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-md-12">
+
+
+              <div class="card-header">
+
+
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -165,13 +187,13 @@
 
                       <div class="chart">
                       <!-- Sales Chart Canvas -->
-{#                      <canvas id="salesChart" ></canvas>#}
-                          <div class="box-body">
+                      <canvas id="salesChart" ></canvas>
+                          <div class="box-body" style="margin-top: -20%">
                             <div class="chart">
                                  <canvas id="myChart2"></canvas>
                             </div>
                           </div>
-                          </div>
+                      </div>
                     <!-- /.chart-responsive -->
                   </div>
                   <!-- /.col -->
@@ -181,41 +203,81 @@
                     </p>
 
                       <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">nom</th>
-      <th scope="col">valeur</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>nom_periph</td>
-      <td>{{ nom_periph }}</td>
-    </tr>
-    <tr>
-      <td>description</td>
-      <td>{{ sysDescr }}</td>
-    </tr>
-    <tr>
-      <td>interface connecte</td>
-      <td>{{ ifNumber }} ({{ ifSpeed }})</td>
-    </tr>
+                          <thead>
+                            <tr>
+                              <th scope="col">nom</th>
+                              <th scope="col">valeur</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>nom_periph</td>
+                              <td>{{ nom_periph }}</td>
+                            </tr>
+                            <tr>
+                              <td>description</td>
+                              <td>{{ sysDescr }}</td>
+                            </tr>
+                            <tr>
+                              <td>interface connecte</td>
+                              <td>{{ ifNumber }} ({{ ifSpeed }})</td>
+                            </tr>
 
-  </tbody>
-</table>
-
+                          </tbody>
+                      </table>
                   </div>
                 <!-- /.row -->
-              </div>
+                </div>
               <!-- ./card-body -->
 
               <!-- /.card-footer -->
-            </div>
+              </div>
             <!-- /.card -->
-          </div>
+
+{#    ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                                  #}
+
+
+                                    <!-- /.chart-responsive -->
+                                  </div>
+                                  <!-- /.col -->
+
+                                  <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                              </div>
+                              <!-- /.card-footer -->
+
+                            <!-- /.card -->
+                          </div>
           <!-- /.col -->
-        </div>
-        </div>
+                        </div>
+
+                    </div>
+
+                  </div>
+
+                  <!-- /.tab-pane -->
+
+                  <div class="row tab-pane" id="settings">
+                   <div class="col">
+                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                   </div>
+
+                      <!-- PIE CHART -->
+                    <div class="col">
+                        <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                      <!-- /.card-body -->
+                    </div>
+
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+
         <!-- /.row -->
       </div><!--/. container-fluid -->
     </section>
@@ -250,6 +312,8 @@
   </div>
 {% endif %}
     <!-- /.content -->
+
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -262,6 +326,71 @@
 
 {#::::::::::::::::::::::::::::: graph 1 :::::::::::::::::::::::::::::::::::::::::::::::#}
 <script>
+{#::::::::::::::::::::::::::::::::donut :::::::::::::::::::::::::::::::#}
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+
+    var used_ram = parseInt('{{used_ram}}')
+    var free_ram = parseInt('{{free_ram}}')
+
+    var used_cpu = parseInt('{{cpu}}')
+    var free_cpu = 100 - parseInt('{{cpu}}')
+
+    var donutData        = {
+      labels: [
+          'RAM utilise (MB)',
+          'RAM libre (MB)',
+      ],
+
+      datasets: [
+        {
+          data: [used_ram, free_ram],
+          backgroundColor : ['#4F98C3', '#D2D6DE'],
+        }
+      ]
+    }
+
+    var pieData        = {
+      labels: [
+          'CPU utilise (%)',
+          'CPU libre (%)',
+      ],
+
+      datasets: [
+        {
+          data: [used_cpu, free_cpu],
+          backgroundColor : ['#DC3545', '#28A745'],
+        }
+      ]
+    }
+
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    var donutChart = new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+    })
+
+{#;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;pie chart;;;;;;;;;;;;;;;;;;;;;;;;;#}
+//- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieData        = pieData;
+    var pieOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
+    {#::::::::::::::::::::::::::::::::::::::real time graph:::::::::::::::::::::::::::::::#}
     var dataObj2 = {
     type: 'line',
     data: {
@@ -320,60 +449,6 @@ window.myLine = new Chart(ctx2, dataObj2);
 </script>
 {#::::::::::::::::::::::::::::: /graph 1 :::::::::::::::::::::::::::::::::::::::::::::::#}
 
-{#::::::::::::::::::::::::::::: graph 2 :::::::::::::::::::::::::::::::::::::::::::::::#}
-{##}
-{#<script>#}
-{#    var dataObj = {#}
-{#    type: 'line',#}
-{#    data: {#}
-{#        labels: [1,2,3,4,5,6,7,8,9,10,11],#}
-{#        datasets: [{#}
-{#            label: 'real time graph',#}
-{#            data: [1,2,3,4,5,6,7,8,9,10,11],#}
-{##}
-{#        }]#}
-{#    },#}
-{#    options: {#}
-{#        scales: {#}
-{#            yAxes: [{#}
-{#                ticks: {#}
-{#                    beginAtZero: true#}
-{#                }#}
-{#            }]#}
-{#        }#}
-{#    }#}
-{#}#}
-{##}
-{#var ctx = document.getElementById('myChart').getContext('2d');#}
-{#window.myLine = new Chart(ctx, dataObj);#}
-{#</script>#}
-{##}
-{#<script>#}
-    {#let socket = new WebSocket('ws://localhost:8000/ws/polData/')#}
-    {##}
-    {#socket.onopen = function (e) {#}
-    {#    alert("connx open")#}
-    {#};#}
-    {##}
-    {#similaire au websocket_receive#}
-    {#socket.onmessage = function (e) {#}
-    {#    console.log(e.data);#}
-    {##}
-    {#    var recData = JSON.parse(e.data);#}
-    {##}
-    {#    dataObjNew = dataObj['data']['datasets'][0]['data'];#}
-    {##}
-    {#    dataObjNew.shift();#}
-    {#    dataObjNew.push(recData2.value);#}
-    {#    dataObj['data']['datasets'][0]['data'] = dataObjNew;#}
-    {##}
-    {#    window.myLine.update();#}
-    {#};#}
-    {##}
-    {#socket.onclose = function (e) {#}
-    {#    alert("conn close ")#}
-    {#};#}
-{##}
-{#</script>#}
+
 </body>
 </html>

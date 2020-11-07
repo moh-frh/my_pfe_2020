@@ -80,12 +80,28 @@
             </a>
           </li>
 
+        {% if request.user.is_superuser == 1 %}
           <li class="nav-item">
-            <a class="nav-link"  href="/admin/login/">
-                <i class="fas fa-user-shield"></i>
-                mode admin
+            <a href="/admin/log_viewer/" class="nav-link">
+              <i class="fas fa-file-medical-alt"></i>
+              <p>
+                log viewer
+              </p>
             </a>
           </li>
+        {% endif %}
+
+
+          <li class="nav-item">
+            <a href="/admin/login/" class="nav-link">
+              <i class="fas fa-user-shield"></i>
+              <p>
+                mode admin
+              </p>
+            </a>
+          </li>
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

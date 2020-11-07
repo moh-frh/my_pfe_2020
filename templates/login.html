@@ -41,10 +41,57 @@
      <div class="row">
        <div class="col-8">
          <div class="icheck-primary">
-           <input type="checkbox" id="remember">
-           <label for="remember">
-             souvenir de moi
-           </label>
+{#           <input type="checkbox" id="remember">#}
+{#           <div class="card-body">#}
+{#                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">#}
+{#                  recuperer le mot de passe#}
+{#                </button>#}
+{#           </div>#}
+
+           <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">entrer votre email</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                         <div class="lockscreen-wrapper">
+  <!-- User name -->
+{#  <div class="lockscreen-name">John Doe</div>#}
+
+  <!-- START LOCK SCREEN ITEM -->
+  <div class="lockscreen-item">
+    <!-- lockscreen image -->
+    <div class="lockscreen-image">
+      <img src="{% static 'images/user_recover_pass.jpg'%}" style="margin-left: -70px" alt="User Image">
+    </div>
+    <!-- /.lockscreen-image -->
+
+    <!-- lockscreen credentials (contains the form) -->
+    <form class="lockscreen-credentials" method="get" action="{% url 'get_password' %}">
+        {% csrf_token %}
+      <div class="input-group">
+        <input type="email_recov" class="form-control" >
+
+        <div class="input-group-append">
+          <button type="submit" class="btn"><i class="fas fa-arrow-right text-muted"></i></button>
+        </div>
+      </div>
+    </form>
+    <!-- /.lockscreen credentials -->
+  </div>
+
+</div>
+                    </div>
+
+                 </div>
+
+             </div>
+            </div>
+
          </div>
        </div>
 
@@ -87,9 +134,9 @@
 <script>
 		//Query All input fields
 		var form_fields = document.getElementsByTagName('input')
-		form_fields[3].placeholder='Username..';
+		form_fields[3].placeholder='                     entrer l\'adresse email';
 		form_fields[4].placeholder='password';
-		form_fields[5].placeholder='confirmer password...';
+		form_fields[5].placeholder='entrer votre adresse email';
 		{#form_fields[4].placeholder='Re-enter Password...';#}
 
 

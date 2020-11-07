@@ -1,20 +1,13 @@
-
 hostname     1.3.6.1.2.1.1.5
-
 ------------------------------ show process mem ----------------------------------------\
-Free memory OID      1.3.6.1.4.1.9.9.48.1.1.1.5                                         |
-                                                                                        |
+Free memory OID      1.3.6.1.4.1.9.9.48.1.1.1.5                                         |                                                                                        |
 Used memory OID          1.3.6.1.4.1.9.9.48.1.1.1.6                                     |
-
 cpu load ( last 1 minute ) : .1.3.6.1.4.1.9.2.1.57 / 58                                                                                        |
 ----------------------------------------------------------------------------------------/
-
-*** python manage.py shell_plus --notebook
-
+***
+python manage.py shell_plus --notebook
 ------------------------------ qlq notions pour moi  -----------------------------------\
-
 django.contrib.admin.sites.AdminSite
-
 -------------------------snmp config-------------------------------------------------------/
 
 (config)#snmp-server community public2 ro
@@ -30,3 +23,8 @@ enable secret cisco2
 # username mohamed password fouaz
 # ip domain-name pfe.com
 # crypto key generate rsa
+
+-------------------------ssh commands-------------------------------------------------------/
+# conf t
+# tacacs-server host 1.1.1.1
+# show tacacs

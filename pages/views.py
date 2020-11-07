@@ -18,7 +18,7 @@ import platform    # For getting the operating system name
 import subprocess  # For executing a shell command
 import scapy.all as scapy
 from .forms import UserUpdateForm
-
+from django.contrib.auth.hashers import check_password
 from datetime import datetime
 logger = logging.getLogger('django')
 # Create your views here.
@@ -44,6 +44,10 @@ def Login(request):
 
         context={}
         return render(request, 'login.html', context)
+
+def Get_password(request):
+    print("request.POST.get('email')")
+    return HttpResponse("request.POST.email_recov")
 
 def Logout(request):
     logout(request)
@@ -76,6 +80,12 @@ def Dashboard(request):
     # user_update = User.objects.get(id=request.user.id)
     # form = UserUpdateForm(instance=user_update)
     user = request.user
+
+    # print("+++++++++++")
+    # passw = request.user.password.decode()
+    #
+    # print(passw)
+
 
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, instance=request.user)
@@ -169,21 +179,26 @@ def Test_snmp(request):
     vers = request.POST['version_snmp']
     comm = request.POST['comm_string']
 
+    if snmp_walk(ip, comm, '1.3.6.1.2.1.1.5') is None:
+        return render(request, "snmp_error.html")
+    else:
+        context = {'nom_periph': snmp_walk(ip, comm, '1.3.6.1.2.1.1.5'),
+                   'desc_pereph': "desc",
+                   'nom_page': "monitoring",
+                   'sysDescr': snmp_walk(ip, comm, '1.3.6.1.2.1.1.1'),
+                   'ifNumber': snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.2'),
+                   'ifSpeed': humansize(snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.5')),
+                   'ifMac': snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.6'),
 
-    context = {'nom_periph': snmp_walk(ip, comm, '1.3.6.1.2.1.1.5'),
-               'desc_pereph': "desc",
-               'nom_page': "monitoring",
-               'nom_periph': snmp_walk(ip, comm, '1.3.6.1.2.1.1.5'),
-               'sysDescr': snmp_walk(ip, comm, '1.3.6.1.2.1.1.1'),
-               'ifNumber': snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.2'),
-               'ifSpeed': humansize(snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.5')),
-               'ifMac': snmp_walk(ip, comm, '1.3.6.1.2.1.2.2.1.6'),
+                   'cpu': snmp_walk(ip, comm, '.1.3.6.1.4.1.9.2.1.57'),
+                   'free_ram': humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.5')),
+                   'used_ram': humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.6')),
+                   'number_of_users': User.objects.all().count()
+                   }
 
-               'cpu': snmp_walk(ip, comm, '.1.3.6.1.4.1.9.2.1.57'),
-               'free_ram': humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.5')),
-               'use d_ram': humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.6')),
-               'number_of_users': User.objects.all().count()
-               }
+        print("free_ram", humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.5')))
+        print("used_ram", humansize(snmp_walk(ip, comm, '1.3.6.1.4.1.9.9.48.1.1.1.6')))
 
-    return render(request, 'monitoring.html', context)
+
+        return render(request, 'monitoring.html', context)
 

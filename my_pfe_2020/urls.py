@@ -20,7 +20,7 @@ from authentication.views import RegisterPage
 # from monitor_side.views import websock
 from configuration_side.views import Configuration, Commands_line, Commands
 from pages.views import Login, Dashboard, Logout, Monitor, Pre_monitor, Test_snmp, \
-    Contact
+    Contact, Get_password
 
 from reports_side.views import CreateReport, UpdateReport, DeleteReport
 
@@ -53,5 +53,7 @@ urlpatterns = [
 
     path('test_snmp/', Test_snmp, name='test_snmp'),
     path('admin/log_viewer/', include('log_viewer.urls'), name="log_viewer"),
+
+    path('get_password/', Get_password, name="get_password"),
 
 ]
