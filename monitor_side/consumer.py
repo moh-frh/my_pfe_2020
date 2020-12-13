@@ -64,7 +64,7 @@ class DashConsumer(AsyncWebsocketConsumer):
         if (datapoint["type"] == "graph2"):
 
             val = datapoint['value']
-            print("val de graph1", val)
+            # print("val de graph1", val)
 
             # broadcast the message event to be sent
             await self.channel_layer.group_send(
@@ -77,7 +77,7 @@ class DashConsumer(AsyncWebsocketConsumer):
 
         elif(datapoint["type"] == "graph1"):
             val = datapoint['value']
-            print("val de graph1", val)
+            # print("val de graph1", val)
 
             # broadcast the message event to be sent
             await self.channel_layer.group_send(
@@ -89,7 +89,7 @@ class DashConsumer(AsyncWebsocketConsumer):
             )
         elif(datapoint["type"] == "graph3"):
             val = datapoint['value']
-            print("val de graph3", val)
+            # print("val de graph3", val)
 
             # broadcast the message event to be sent
             await self.channel_layer.group_send(
@@ -102,7 +102,7 @@ class DashConsumer(AsyncWebsocketConsumer):
 
         else:
             val = datapoint['value']
-            print("val de graph4", val)
+            # print("val de graph4", val)
 
             # broadcast the message event to be sent
             await self.channel_layer.group_send(
@@ -130,6 +130,6 @@ class DashConsumer(AsyncWebsocketConsumer):
         #     )
         # else:pass
 
-        print('>>>>>', text_data)
+        # print('>>>>>', text_data)
         # pass
 

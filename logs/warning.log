@@ -1,0 +1,2 @@
+WARNING ( 2020-11-15 12:25:42,708 ) : Not Found: /test_snmp/widgets.html [ log 15788 11688 ] 
+WARNING ( 2020-11-15 12:25:42,720 ) : HTTP GET /test_snmp/widgets.html 404 [0.10, 127.0.0.1:58557] [ runserver 15788 8948 ] 

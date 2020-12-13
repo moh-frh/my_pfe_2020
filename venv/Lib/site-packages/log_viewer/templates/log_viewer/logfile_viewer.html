@@ -1,0 +1,139 @@
+{% extends "admin/base_site.html" %}
+{% load static i18n %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo;
+    <a href="{% url 'log_viewer:log_file_view' %}">{% if custom_file_list_title %}{{ custom_file_list_title }}{% else %}{% trans "Django Log Viewer" %}{% endif %}</a>
+  </div>
+{% endblock %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'log_viewer/css/jquery.dataTables.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'log_viewer/css/log-viewer.css' %}">
+
+  {% if custom_style_file %}
+    <link type="text/css" href="{{ custom_style_file }}" rel="stylesheet">
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  <script src="{% static 'log_viewer/js/jquery.min.js' %}"></script>
+  <script src="{% static 'log_viewer/js/jquery.dataTables.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="django__log__viewer">
+    <div id="content-main">
+      <div class="module filtered" id="changelist">
+        <div id="changelist-filter">
+          <h2>{% trans 'Log Files' %}</h2>
+          <div id="log-files-list">
+          </div>
+        </div>
+        <form id="changelist-form">
+          <div class="results">
+            <div class="headers">
+              <h1 class="pull-left">{% if custom_file_list_title %}{{ custom_file_list_title }}{% else %}{% trans "Django Log Viewer" %}{% endif %}</h1>
+              <div class="download-buttons">
+                <a href="{% url 'log_viewer:log_download_zip_view' %}" class="btn-download pull-right">{% trans "Download all Log Files" %}</a>
+                <a href="{% url 'log_viewer:log_download_file_view' %}" class="btn-download pull-right btn-download-this-log" style="display:none">{% trans "Download this Log File" %}</a>
+              </div>
+            </div>
+            <table id="log-entries" class="display" style="width:100%">
+              <thead>
+                <tr>
+                  <th scope="col">{% trans 'No.' %}</th>
+                  <th scope="col">{% trans 'Log entries' %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="2">{% trans 'No entries!' %}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadDataTable(table_name, url_json) {
+      $(table_name).DataTable({
+        pageLength: {{ page_length }},
+        columns: [{data: 0}, {data: 1}],
+        ajax: function (data, callback, settings) {
+          $.ajax({
+            type: 'get',
+            url: url_json,
+            success:function(response){
+                const new_logs = [];
+                var next_page = response.next_page || 1;
+
+                response.logs.forEach(function(text, numb, logs){
+                  new_logs.push([numb+1, text])
+                });
+
+                callback({
+                  data: new_logs,
+                  recordsTotal: next_page,
+                  recordsFiltered: next_page
+                });
+            }
+          });
+        }
+      });
+    }
+
+    function loadDataTableTrigger(url_json) {
+      var table_name ='table#log-entries';
+      if (!$.fn.dataTable.isDataTable(table_name)) {
+        loadDataTable(table_name, url_json);
+      }else {
+        table_dt = $(table_name).DataTable();
+        table_dt.destroy();
+        loadDataTable(table_name, url_json);
+      }
+    }
+
+    $(document).ready(function() {
+        // just blank entry to get the `log_files`
+        var url_json = "{% url 'log_viewer:log_json_view' xxxxx %}";
+        $.getJSON(url_json, function(result){
+            result.log_files.forEach(function(log) {
+                const keys = Object.keys(log);
+                Object.entries(log).forEach(([file_name, xtra]) => {
+                    // console.log(file_name);
+                    // console.log(xtra);
+                    var html = '<ul><li><a class="btn-load-json-log" href="javascript:;" '+
+                               'data-file-name="'+file_name+'" '+
+                               'data-href="'+url_json+file_name+'">'+xtra.display+'</a></li></ul>'
+                    $('div#log-files-list').append(html);
+                });
+            });
+        });
+    });
+
+    $(document).on('click', '.btn-load-json-log', function(){
+        // console.log(this);
+        $(this).closest('#log-files-list').find('li').removeClass('selected');
+        $(this).closest('li').addClass('selected');
+        loadDataTableTrigger($(this).data('href'));
+
+        let btnDownloadSingleFile = $('.btn-download-this-log');
+        let file_name = $(this).data('file-name');
+        var href = btnDownloadSingleFile.attr('href');
+
+        if(href.indexOf('file_name') > -1) {
+          href = href.replace(/\bfile_name=(.*)\b/, 'file_name=' + file_name)
+        }else {
+          href = href + '?file_name='+ file_name
+        }
+
+        btnDownloadSingleFile.attr('href', href);
+        btnDownloadSingleFile.show();
+    });
+  </script>
+{% endblock%}

@@ -188,11 +188,13 @@ LOGGING ={
         'file1':
             {
             'level':'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            # 'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.FileHandler',
             'filename':'./logs/debug.log',
-            'maxBytes': 1024 * 1024 * 2,  # 10 MB
+            # 'maxBytes': 1024 * 1024 * 2,  # 10 MB
             # 'backupCount' : 1,
             'formatter': 'simpleRe',
+            'mode':'w',
             },
         'file2':
             {
@@ -200,6 +202,7 @@ LOGGING ={
             'class': 'logging.FileHandler',
             'filename':'./logs/info.log',
             'formatter': 'simpleRe',
+            'mode':'w',
             },
         'file3':
             {
@@ -214,6 +217,7 @@ LOGGING ={
             'class': 'logging.FileHandler',
             'filename':'./logs/warning.log',
             'formatter': 'simpleRe',
+            'mode':'w',
             },
 
 

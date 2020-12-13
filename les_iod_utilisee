@@ -13,18 +13,34 @@ django.contrib.admin.sites.AdminSite
 (config)#snmp-server community public2 ro
 (config)#snmp-server community private2 rw
 
+
+::::::::::::::::::::::::: snmp-trap ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+conf t
+snmp-server community public ro SNMP_ACL
+snmp-server location lab3
+snmp-server contact MOHAMED fouaz
+snmp-server host 192.168.126.6 version 2c public
+snmp-server enable traps
+ip access-list standard SNMP_ACL
+permit 192.168.126.6
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+udp.port == 162
+
 -------------------------ssh config-------------------------------------------------------/
 show crypto key mypubkey rsa
 
 enable secret cisco2
 
-(config)# line vty 0 3
-# login local
-# username mohamed password fouaz
-# ip domain-name pfe.com
-# crypto key generate rsa
+line vty 0 3
+login local
+username mohamed password fouaz
+ip domain-name pfe.com
+crypto key generate rsa
 
 -------------------------ssh commands-------------------------------------------------------/
 # conf t
 # tacacs-server host 1.1.1.1
 # show tacacs
+

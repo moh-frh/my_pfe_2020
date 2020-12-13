@@ -152,10 +152,24 @@
                                         <thead>
                                             {% for net, ddd in connected_hosts %}
 
+                                            {% if net.pdst == "192.168.126.6" %}
+
                                              <tr>
                                                 <th> <i class="fas fa-wifi"></i> </th>
-                                                <th> <a href="#"> {{ net.pdst }} </a></th>
+                                                <th> <a > {{ net.pdst }} </a></th>
+                                                <th> mon localhost </th>
                                              </tr>
+
+                                             {% else %}
+
+                                             <tr>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> <i class="fas fa-wifi"></i> </a> </th>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> {{ net.pdst }} </a></th>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> cisco-router </a></th>
+                                             </tr>
+
+                                             {% endif %}
+
 
                                              {% endfor %}
                                         </thead>

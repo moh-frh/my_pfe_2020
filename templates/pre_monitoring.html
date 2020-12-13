@@ -87,7 +87,9 @@
                   <div class="input-group mb-3">
                     <input value="{{ net }}" name="adr_ip" type="text" class="form-control" placeholder="entrer l'adresse ip (ex : 192.168.1.1)" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="tester_ping()">tester le ping</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="alert_ping()">
+                            tester le ping
+                        </button>
                     </div>
                   </div>
 
@@ -145,6 +147,10 @@
   </div>
 
 </div>
-
+<script>
+    function alert_ping(){
+        setTimeout(function(){ alert("ping success !!!"); }, 3000);
+    }
+</script>
 </body>
 </html>

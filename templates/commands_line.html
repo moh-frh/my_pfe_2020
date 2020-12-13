@@ -1,0 +1,211 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>SofiTreon</title>
+
+    {% include "to_include/style.html" %}
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+{% include "to_include/navbar.html" %}
+{% include "to_include/aside.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">{{ nom_page }}</h1>
+          </div><!-- /.col -->
+          <!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+      <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+
+          <!-- /.col -->
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">entrer vos commandes_></a></li>
+                  <li>
+                      <div class="card-tools float-right">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                  </button>
+                                  <div class="btn-group">
+                                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                      <i class="fas fa-wrench"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <form method="GET">
+                                            <button type="submit" class="dropdown-item">sauvgarder les config</button>
+                                        </form>
+
+                                    </div>
+                                  </div>
+
+                      </div>
+                  </li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+
+                      <div class="row">
+                      <div class="col-md-4">
+
+                      <form method="post" action="{% url 'commands' %}">
+                        {% csrf_token %}
+
+                        <div class="input-group mb-3">
+                            <input style="background-color: #343A40; color: aliceblue" name="command_line" type="text" class="form-control" placeholder="entrer la commande_>" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" ><i class="fas fa-terminal"></i></button>
+                            </div>
+                        </div>
+                      </form>
+
+
+
+          </div>
+                          <div class="col-md-8">resultat de la commende:
+                            <div class="card">
+
+                              <div class="card-header" style="background-color: #343A40; color: aliceblue">
+                                <h5 class="card-title"> _> # {{ command }} </h5>
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body" style="background-color: #343A40; color: aliceblue; border-top: aliceblue solid 1px">
+                                <div class="row">
+                                  <div class="col-md-8">
+                                    {{ command_result }}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- /.card-footer -->
+                            </div>
+
+{#                          <div id="commands_result">fds</div>#}
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                    </div>
+                    <!-- /.post -->
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+
+          <!-- /.col -->
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">mes commandes_></a></li>
+                  <li>
+                      <div class="card-tools float-right">
+                                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                  </button>
+                      </div>
+                  </li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                        <div class="table-responsive">
+                            <table class="table ">
+                                <thead>
+                                    <th>  code de la commande </th>
+                                    <th>  resultat de la commande </th>
+                                    <th>  date de commande </th>
+                                </thead>
+                                {% for command in all_commands %}
+                                <tr>
+                                    <th>  #{{ command.command_code }} </th>
+                                    <td>  {{ command.command_result }} </td>
+                                    <td>  {{ command.timestamp }} </td>
+                                {# <td><img class="col-sm-2" src="{% static "images/router.png" %}" ></td>#}
+                                </tr>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.post -->
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+  </div>
+
+</div>
+</body>
+
+<script type="text/javascript">
+
+    {#form.addEventListener('submit', (e)=>{#}
+    {#    e.preventDefault()#}
+    {#    console.log('submited')#}
+    {##}
+    {#    $.ajax({#}
+    {#        type:'POST',#}
+    {#        url: '',#}
+    {#        data:{},#}
+    {#        sucess: function (response) {#}
+    {#            handleAlert('success')#}
+    {#        },#}
+    {#        error: function (error) {#}
+    {#            handleAlert('error')#}
+    {#        }#}
+    {#    })#}
+    {#})#}
+
+</script>

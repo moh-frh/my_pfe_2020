@@ -25,8 +25,20 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <h1 class="m-0 text-dark">{{ nom_page }}</h1>
+
+            <ol class="breadcrumb float-sm-right">
+
+              <div class="alert alert-success" id="msg" role="alert"> <i class="fas fa-check-circle"></i> bienvenue, </div>
+            </ol>
+
+{#              {% if messages %}#}
+{#                  {% for message in messages %}#}
+
+{#                  {% endfor %}#}
+{#              {% endif %}#}
+
           </div><!-- /.col -->
           <!-- /.col -->
         </div><!-- /.row -->
@@ -69,6 +81,22 @@
                   <li class="list-group-item">
                     <b>date d'ajout</b> <a class="float-right">{{ request.user.date_joined }}</a>
                   </li>
+
+                  <li class="list-group-item">
+                    <b>administrateur:</b>
+                      <a class="float-right">
+                          {% if request.user.is_superuser == 1 %}
+                              Oui
+                              {% else %} Non
+                          {% endif %}
+
+                      </a>
+                  </li>
+
+                  <li class="list-group-item">
+                    <b>dernier login </b> <a class="float-right">{{ request.user.last_login }}</a>
+                  </li>
+
                 </ul>
 
               </div>
@@ -124,7 +152,7 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">information sur le reseau</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab"> les appareils connectes </a></li>
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Modifier mes informations</a></li>
                 </ul>
               </div><!-- /.card-header -->
@@ -138,24 +166,25 @@
                           <div class="col-md-12">
                             <div class="card">
                               <div class="card-header">
-                                <h5 class="card-title"> les appareils connectes </h5>
+                                <h5 class="card-title"> les appareils connectes : {{ connected_hosts|length|add:-1 }} </h5>
+
 
                                 <div class="card-tools">
                                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                   </button>
-                                  <div class="btn-group">
-                                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                      <i class="fas fa-wrench"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                      <a href="#" class="dropdown-item">Action</a>
-                                      <a href="#" class="dropdown-item">Another action</a>
-                                      <a href="#" class="dropdown-item">Something else here</a>
-                                      <a class="dropdown-divider"></a>
-                                      <a href="#" class="dropdown-item">Separated link</a>
-                                    </div>
-                                  </div>
+{#                                  <div class="btn-group">#}
+{#                                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">#}
+{#                                      <i class="fas fa-wrench"></i>#}
+{#                                    </button>#}
+{#                                    <div class="dropdown-menu dropdown-menu-right" role="menu">#}
+{#                                      <a href="#" class="dropdown-item">Action</a>#}
+{#                                      <a href="#" class="dropdown-item">Another action</a>#}
+{#                                      <a href="#" class="dropdown-item">Something else here</a>#}
+{#                                      <a class="dropdown-divider"></a>#}
+{#                                      <a href="#" class="dropdown-item">Separated link</a>#}
+{#                                    </div>#}
+{#                                  </div>#}
                                   <button type="button" class="btn btn-tool" data-card-widget="remove">
                                     <i class="fas fa-times"></i>
                                   </button>
@@ -166,7 +195,7 @@
                                 <div class="row">
                                   <div class="col-md-8">
                                     <p class="text-center">
-                                      <strong> 14 November, 2014</strong>
+                                      <strong id="now_time"> </strong>
                                     </p>
 
                                     <div class="table-responsive">
@@ -174,10 +203,24 @@
                                         <thead>
                                             {% for net, ddd in connected_hosts %}
 
+                                            {% if net.pdst == "192.168.126.6" %}
+
                                              <tr>
                                                 <th> <i class="fas fa-wifi"></i> </th>
-                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> {{ net.pdst }} </a></th>
+                                                <th> <a > {{ net.pdst }} </a></th>
+                                                <th> mon localhost </th>
                                              </tr>
+
+                                             {% else %}
+
+                                             <tr>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> <i class="fas fa-wifi"></i> </a> </th>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> {{ net.pdst }} </a></th>
+                                                <th> <a  href="{% url 'pre_monitor' net.pdst %}"> cisco-router </a></th>
+                                             </tr>
+
+                                             {% endif %}
+
 
                                              {% endfor %}
                                         </thead>
@@ -369,6 +412,26 @@
 		for (var field in form_fields){
 			form_fields[field].className += ' form-control'
 		}
+</script>
+
+<script>
+        $(document).ready(function () {
+            setInterval(function () {
+                var dt = new Date();
+                $('#now_time').text(dt.getHours()+":"+dt.getUTCMinutes()+":"+dt.getUTCSeconds());
+            },1000);
+            var dt = new Date();
+        });
+</script>
+
+<script>
+    setTimeout(function () {
+        if ($("#msg").length > 0)
+        {
+            $("#msg").remove();
+        }
+
+    }, 2000)
 </script>
 
 </body>

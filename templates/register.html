@@ -54,9 +54,7 @@
 {#            </div>#}
           </div>
           <!-- /.col -->
-            {% for msg in messages %}
-                <p id="messages"> {{ msg }} </p>
-            {% endfor %}
+
 
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -72,6 +70,14 @@
         <a href="{% url 'login' %}" class="btn btn-block btn-secondary">
           login
         </a>
+
+          {% for msg in messages %}
+            <a href="#" class="btn btn-block btn-danger">
+                <i class="fas fa-exclamation-triangle"></i>
+                          {{ msg }}
+                <i class="fas fa-exclamation-triangle"></i>
+            </a>
+        {% endfor %}
 {#        <a href="#" class="btn btn-block btn-danger">#}
 {#          <i class="fab fa-google-plus mr-2"></i>#}
 {#          Sign up using Google+#}

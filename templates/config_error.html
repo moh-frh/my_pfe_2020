@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>SofiTreon</title>
+    {% include "to_include/style.html" %}
+
+</head>
+
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+{% include "to_include/navbar.html" %}
+
+
+  <!-- Main Sidebar Container -->
+{% include "to_include/aside.html" %}
+  <!-- aside -->
+
+  <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>config erreur</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">config erreur</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="error-page">
+        <h2 class="headline text-danger">404</h2>
+
+        <div class="error-content">
+          <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops!<br> verifier bien les informations de SSH.</h3>
+
+          <p>
+            <a href="javascript:history.back()">retourner vers formulaire</a>
+          </p>
+
+{#          <form class="search-form">#}
+            <div class="input-group">
+              <input id="the_search_box" type="text" name="search" class="form-control" placeholder="rechercher dans google">
+
+              <div class="input-group-append">
+                <button id="btn_ser" onclick="window.location='http://www.google.com/search?q='+escape(document.getElementById('the_search_box').value)" type="submit"  class="btn btn-danger"><i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.input-group -->
+{#          </form>#}
+        </div>
+      </div>
+      <!-- /.error-page -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<script>
+
+
+
+</script>
+</body>
+</html>
+

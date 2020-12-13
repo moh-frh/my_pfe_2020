@@ -3,149 +3,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Registration Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-{% include "to_include/style.html" %}
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style_login.css' %}">
 </head>
-
 <body>
-<div class="register-box" >
-
-  <div class="card" style="margin-right: -200%; margin-left: 120%; margin-top: 50%;">
-
-    <div class="card-body register-card-body">
-      <p class="login-box-msg"> vous avez deja un compte</p>
-
-      <form action="" method="POST">
-          {% csrf_token %}
-     <div class="input-group mb-3">
-       <input type="text" class="form-control" placeholder="username" name="username">
-       <div class="input-group-append">
-         <div class="input-group-text">
-           <span class="fas fa-envelope"></span>
-         </div>
-       </div>
-     </div>
-
-     <div class="input-group mb-3">
-       <input type="password" class="form-control" placeholder="password" name="password">
-       <div class="input-group-append">
-         <div class="input-group-text">
-           <span class="fas fa-lock"></span>
-         </div>
-       </div>
-     </div>
-     <div class="row">
-       <div class="col-8">
-         <div class="icheck-primary">
-{#           <input type="checkbox" id="remember">#}
-{#           <div class="card-body">#}
-{#                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">#}
-{#                  recuperer le mot de passe#}
-{#                </button>#}
-{#           </div>#}
-
-           <div class="modal fade" id="modal-default">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">entrer votre email</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                         <div class="lockscreen-wrapper">
-  <!-- User name -->
-{#  <div class="lockscreen-name">John Doe</div>#}
-
-  <!-- START LOCK SCREEN ITEM -->
-  <div class="lockscreen-item">
-    <!-- lockscreen image -->
-    <div class="lockscreen-image">
-      <img src="{% static 'images/user_recover_pass.jpg'%}" style="margin-left: -70px" alt="User Image">
-    </div>
-    <!-- /.lockscreen-image -->
-
-    <!-- lockscreen credentials (contains the form) -->
-    <form class="lockscreen-credentials" method="get" action="{% url 'get_password' %}">
-        {% csrf_token %}
-      <div class="input-group">
-        <input type="email_recov" class="form-control" >
-
-        <div class="input-group-append">
-          <button type="submit" class="btn"><i class="fas fa-arrow-right text-muted"></i></button>
-        </div>
-      </div>
-    </form>
-    <!-- /.lockscreen credentials -->
-  </div>
-
-</div>
-                    </div>
-
-                 </div>
-
-             </div>
+    <div class="registration-form" style="margin: 1%;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <span><img style="width: 50%; margin-left: 25%;" src="{% static 'images/sofitreon_black.png' %}"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control item" id="username" name="username" placeholder="username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control item" id="password" name="password" placeholder="password">
             </div>
 
-         </div>
-       </div>
+            <div class="col-4 text-center">
+                <button type="submit" class="btn btn-primary btn-block" style="margin-left: 125%;">Login</button>
+            </div>
+        </form>
+        <div class="social-media">
 
+{#            <div class="social-icons">#}
+{#                <a href="#"><i class="icon-social-facebook" title="Facebook"></i></a>#}
+{#                <a href="#"><i class="icon-social-google" title="Google"></i></a>#}
+{#                <a href="#"><i class="icon-social-twitter" title="Twitter"></i></a>#}
+{#            </div>#}
 
-       <!-- /.col -->
-       <div class="col-4">
-         <button type="submit" class="btn btn-primary btn-block">Login</button>
-       </div>
-       <!-- /.col -->
-     </div>
-   </form>
-
-      <div class="social-auth-links text-center">
-        <p>- OR -</p>
-
-        <a href="{% url 'register' %}" class="btn btn-block btn-secondary">
-          creer un nouveau compte
-        </a>
-
-        {% for msg in messages %}
-            <a href="#" class="btn btn-block btn-danger">
+            {% for msg in messages %}
+            <a href="#" class="btn btn-block btn-danger" style="margin-left:10%; margin-right:10%; width: 80%;">
                 <i class="fas fa-exclamation-triangle"></i>
                           {{ msg }}
                 <i class="fas fa-exclamation-triangle"></i>
             </a>
-        {% endfor %}
+            {% endfor %}
 
-      </div>
-
+        </div>
     </div>
-    <!-- /.form-box -->
-  </div><!-- /.card -->
 
-</div>
-
-
-
-
-<!-- /form scripts -->
-<script>
-		//Query All input fields
-		var form_fields = document.getElementsByTagName('input')
-		form_fields[3].placeholder='                     entrer l\'adresse email';
-		form_fields[4].placeholder='password';
-		form_fields[5].placeholder='entrer votre adresse email';
-		{#form_fields[4].placeholder='Re-enter Password...';#}
-
-
-		for (var field in form_fields){
-			form_fields[field].className += ' form-control'
-		}
-</script>
-
-
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script src="{% static 'js/script_login.js' %}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,1 @@
+{"argv": ["python", "-m", "ipykernel_launcher", "-f", "{connection_file}", "--ext", "django_extensions.management.notebook_extension"], "env": {"PYTHONPATH": "C:\\Users\\test\\PycharmProjects\\my_pfe_2020"}, "display_name": "Django Shell-Plus", "language": "python", "interrupt_mode": "signal", "metadata": {}}
